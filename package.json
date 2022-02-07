@@ -4,8 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev:type": "nodemon --exec ts-node ./src/server --ext ts,js --delay 1s",
-    "dev": "nodemon --exec babel-node ./src/server.js --delay 1"
+    "dev:typescript": "nodemon --exec ts-node ./src/server --ext ts,js --delay 1s",
+    "dev": "nodemon --exec babel-node ./src/server.js --delay 1",
+    "introspect:dev:covies": "rover subgraph introspect http://localhost:3001/graphql > ./src/graphql/generated/covies.graphql",
+    "introspect:dev:coeathers": "rover subgraph introspect http://localhost:3002/graphql > ./src/graphql/generated/coeathers.graphql",
+    "introspect:dev:all": "rover subgraph introspect http://localhost:3001/graphql > ./src/graphql/generated/covies.graphql && rover subgraph introspect http://localhost:3002/graphql > ./src/graphql/generated/coeathers.graphql",
+    "compose": "rover supergraph compose --config ./supergraph-config.yaml > ./src/graphql/generated/supergraph.graphql",
+    "subgraph:list": "rover subgraph list cateway-production@current"
   },
   "author": "Codeliner <codeliners96@gmail.com>",
   "license": "MIT",

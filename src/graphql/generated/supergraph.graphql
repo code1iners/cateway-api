@@ -1,0 +1,1168 @@
+schema
+  @core(feature: "https://specs.apollo.dev/core/v0.2"),
+  @core(feature: "https://specs.apollo.dev/join/v0.1", for: EXECUTION)
+{
+  query: Query
+}
+
+directive @core(as: String, feature: String!, for: core__Purpose) repeatable on SCHEMA
+
+directive @join__field(graph: join__Graph, provides: join__FieldSet, requires: join__FieldSet) on FIELD_DEFINITION
+
+directive @join__graph(name: String!, url: String!) on ENUM_VALUE
+
+directive @join__owner(graph: join__Graph!) on INTERFACE | OBJECT
+
+directive @join__type(graph: join__Graph!, key: join__FieldSet) repeatable on INTERFACE | OBJECT
+
+type AirPollutionCoord {
+  lat: Float
+  lon: Float
+}
+
+type AirPollutionData {
+  coord: AirPollutionCoord
+  list: [AirPollutionList]
+}
+
+type AirPollutionList {
+  components: AirPollutionListComponent
+  dt: Int
+  main: AirPollutionListMain
+}
+
+type AirPollutionListComponent {
+  co: Float
+  nh3: Float
+  no: Float
+  no2: Float
+  o3: Float
+  pm2_5: Float
+  pm10: Float
+  so2: Float
+}
+
+type AirPollutionListMain {
+  aqi: Int
+}
+
+type AirPollutionResponse {
+  data: AirPollutionData
+  error: CoeatherSimpleError
+  ok: Boolean!
+}
+
+type Backdrop {
+  aspect_ratio: Float
+  file_path: String
+  height: Int
+  iso_639_1: String
+  vote_average: Float
+  vote_count: Int
+  width: Int
+}
+
+type Cast {
+  adult: Boolean
+  gender: Int
+  id: Int
+  known_for_department: String
+  name: String
+  original_name: String
+}
+
+type CitiesReponse {
+  data: [CityData]
+  error: CoeatherSimpleError
+  ok: Boolean!
+}
+
+type CityCoord {
+  lat: Float
+  lon: Float
+}
+
+type CityData {
+  coord: CityCoord
+  country: String
+  id: Int
+  name: String
+  state: String
+}
+
+type CoeatherSimpleError {
+  code: Int
+  message: String
+}
+
+type CountriesCoord {
+  lat: Float
+  lon: Float
+}
+
+type CountriesResponse {
+  data: [String]
+  error: CoeatherSimpleError
+  ok: Boolean!
+}
+
+type CovieSimpleError {
+  code: Int
+  message: String
+}
+
+type CurrentWeatherData {
+  base: String
+  clouds: WeatherClouds
+  cod: Int
+  coord: WeatherCoord
+  dt: Int
+  id: Int
+  main: WeatherMain
+  name: String
+  sys: WeatherSys
+  timezone: Int
+  visibility: Int
+  weather: [WeatherData]
+  wind: WeatherWind
+}
+
+type CurrentWeatherResponse {
+  data: CurrentWeatherData
+  error: CoeatherSimpleError
+  ok: Boolean!
+}
+
+type FureCountriesData {
+  coord: CountriesCoord
+  country: String
+  id: Int
+  name: String
+  state: String
+}
+
+type FureCountriesResponse {
+  data: [FureCountriesData]
+  error: CoeatherSimpleError
+  ok: Boolean!
+}
+
+type Keyword {
+  id: Int
+  name: String
+}
+
+type MovieAuthorDetail {
+  avatar_path: String
+  name: String
+  rating: Float
+  username: String
+}
+
+type MovieCredits {
+  cast: [Cast]
+  id: Int
+}
+
+type MovieCreditsResponse {
+  data: MovieCredits
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type MovieDetailBelongsToCollection {
+  backdrop_path: String
+  id: Int
+  name: String
+  poster_path: String
+}
+
+type MovieDetailData {
+  adult: Boolean
+  backdrop_path: String
+  belongs_to_collection: MovieDetailBelongsToCollection
+  budget: Int
+  genres: [MovieDetailGenre]
+  homepage: String
+  id: Int
+  imdb_id: String
+  original_language: String
+  original_title: String
+  overview: String
+  popularity: Float
+  poster_path: String
+  production_companies: [MovieDetailProductionCompany]
+  production_countries: [MovieDetailProductionCountries]
+  release_date: String
+  revenue: Int
+  runtime: Int
+  spoken_languages: [MovieDetailSpokenLanguage]
+  status: String
+  tagline: String
+  title: String
+  video: Boolean
+  vote_average: Float
+  vote_count: Int
+}
+
+type MovieDetailGenre {
+  id: Int
+  name: String
+}
+
+type MovieDetailProductionCompany {
+  id: Int
+  logo_path: String
+  name: String
+  origin_country: String
+}
+
+type MovieDetailProductionCountries {
+  iso_3166_1: String
+  name: String
+}
+
+type MovieDetailResponse {
+  data: MovieDetailData
+  error: CovieSimpleError
+  ok: Boolean
+}
+
+type MovieDetailSpokenLanguage {
+  english_name: String
+  iso_639_1: String
+  name: String
+}
+
+type MovieImage {
+  backdrops: [Backdrop]
+  id: Int
+  posters: [Poster]
+}
+
+type MovieImagesResponse {
+  data: MovieImage
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type MovieKeywords {
+  id: Int
+  keywords: [Keyword]
+}
+
+type MovieKeywordsResponse {
+  data: MovieKeywords
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type MovieLatestData {
+  adult: Boolean
+  backdrop_path: String
+  budges: Int
+  genres: [MovieLatestGenre]
+  hompage: String
+  id: Int
+  imdb_id: String
+  original_language: String
+  original_title: String
+  overview: String
+  popularity: Int
+  poster_path: String
+  production_companies: [MovieLatestProductionCompany]
+  production_countries: [MovieLatestProductionCountry]
+  release_date: String
+  revenue: Int
+  runtime: Int
+  spoken_languages: [MovieLatestSpokenLanguage]
+  status: String
+  tagline: String
+  video: Boolean
+  vote_average: Float
+  vote_count: Int
+}
+
+type MovieLatestGenre {
+  id: Int
+  name: String
+}
+
+type MovieLatestProductionCompany {
+  id: Int
+  logo_path: String
+  name: String
+  origin_country: String
+}
+
+type MovieLatestProductionCountry {
+  iso_3166_1: String
+  name: String
+}
+
+type MovieLatestResponse {
+  data: MovieLatestData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type MovieLatestSpokenLanguage {
+  english_name: String
+  iso_639_1: String
+  name: String
+}
+
+type MovieNowPlaying {
+  adult: Boolean
+  genre_ids: [Int]
+  id: Int
+  overview: String
+  poster_path: String
+  release_date: String
+}
+
+type MovieNowPlayingData {
+  dates: MovieNowPlayingDate
+  page: Int
+  results: [MovieNowPlaying]
+  total_pages: Int
+  total_results: Int
+}
+
+type MovieNowPlayingDate {
+  maximum: String
+  minimum: String
+}
+
+type MovieNowPlayingResponse {
+  data: MovieNowPlayingData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type MoviePopular {
+  adult: Boolean
+  backdrop_path: String
+  genre_ids: [Int]
+  id: Int
+  original_language: String
+  original_title: String
+  overview: String
+  popularity: Float
+  poster_path: String
+  release_date: String
+  title: String
+  video: Boolean
+  vote_average: Float
+  vote_count: Int
+}
+
+type MoviePopularData {
+  page: Int
+  results: [MoviePopular]
+  total_pages: Int
+  total_results: Int
+}
+
+type MovieProvider {
+  display_priority: Int
+  logo_path: String
+  provider_id: Int
+  provider_name: String
+}
+
+type MovieProvidersData {
+  results: [MovieProvider]
+}
+
+type MovieProvidersResponse {
+  data: MovieProvidersData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type MovieReview {
+  author: String
+  author_details: MovieAuthorDetail
+  content: String
+  created_at: String
+  id: String
+  updated_at: String
+  url: String
+}
+
+type MovieReviewData {
+  id: Int
+  page: Int
+  results: [MovieReview]
+  total_pages: Int
+  total_results: Int
+}
+
+type MovieReviewsResponse {
+  data: MovieReviewData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type MovieSimilar {
+  adult: Boolean
+  backdrop_path: String
+  genre_ids: [Int]
+  id: Int
+  original_language: String
+  original_title: String
+  overview: String
+  popularity: Int
+  poster_path: String
+  release_date: String
+  title: String
+  video: Boolean
+  vote_average: Int
+  vote_count: Int
+}
+
+type MovieSimilarsData {
+  page: Int
+  results: [MovieSimilar]
+  total_pages: Int
+  total_results: Int
+}
+
+type MovieSimilarsResponse {
+  data: MovieSimilarsData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type MovieTopRated {
+  adult: Boolean
+  backdrop_path: String
+  genre_ids: [Int]
+  id: Int
+  original_language: String
+  original_title: String
+  overview: String
+  popularity: Float
+  poster_path: String
+  release_date: String
+  title: String
+  video: Boolean
+  vote_average: Float
+  vote_count: Int
+}
+
+type MovieTopRatedData {
+  page: Int
+  results: [MovieTopRated]
+  total_pages: Int
+  total_results: Int
+}
+
+type MovieTopRatedResponse {
+  data: MovieTopRatedData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type MovieUpcoming {
+  adult: Boolean
+  genre_ids: [Int]
+  id: Int
+  overview: String
+  poster_path: String
+  release_date: String
+}
+
+type MovieUpcomingData {
+  dates: MovieUpcomingDates
+  page: Int
+  results: [MovieUpcoming]
+  total_pages: Int
+  total_results: Int
+}
+
+type MovieUpcomingDates {
+  maximum: String
+  minimum: String
+}
+
+type MovieUpcomingResponse {
+  data: MovieUpcomingData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type MovieVideo {
+  id: String
+  iso_639_1: String
+  iso_3166_1: String
+  key: String
+  name: String
+  official: Boolean
+  published_at: String
+  site: String
+  size: Int
+  type: String
+}
+
+type MovieVideosData {
+  id: Int
+  results: [MovieVideo]
+}
+
+type MovieVideosResponse {
+  data: MovieVideosData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type OneCallCurrent {
+  clouds: Int
+  dew_point: Float
+  dt: Int
+  feels_like: Float
+  humidity: Int
+  pressure: Int
+  sunrise: Int
+  sunset: Int
+  temp: Float
+  uvi: Float
+  visibility: Int
+  weather: [OneCallCurrentWeather]
+  wind_deg: Int
+  wind_speed: Float
+}
+
+type OneCallCurrentWeather {
+  description: String
+  icon: String
+  id: Int
+  main: String
+}
+
+type OneCallDaily {
+  clouds: Int
+  dew_point: Float
+  dt: Int
+  feels_like: OneCallDaliyFeelsLike
+  humidity: Int
+  moon_phase: Float
+  moonrise: Int
+  moonset: Int
+  pop: Float
+  pressure: Int
+  sunrise: Int
+  sunset: Int
+  temp: OneCallDailyTemp
+  uvi: Float
+  weather: [OneCallDailyWeather]
+  wind_deg: Int
+  wind_gust: Float
+  wind_speed: Float
+}
+
+type OneCallDailyTemp {
+  day: Float
+  eve: Float
+  max: Float
+  min: Float
+  morn: Float
+  night: Float
+}
+
+type OneCallDailyWeather {
+  description: String
+  icon: String
+  id: Int
+  main: String
+}
+
+type OneCallDaliyFeelsLike {
+  day: Float
+  eve: Float
+  morn: Float
+  night: Float
+}
+
+type OneCallData {
+  current: OneCallCurrent
+  daily: [OneCallDaily]
+  hourly: [OneCallHourly]
+  lat: Float
+  lon: Float
+  minutely: [OneCallMinutely]
+  timezone: String
+  timezone_offset: Int
+}
+
+type OneCallHourly {
+  clouds: Int
+  dew_point: Float
+  dt: Int
+  feels_like: Float
+  humidity: Int
+  pop: Int
+  pressure: Int
+  temp: Float
+  uvi: Float
+  visibility: Int
+  weather: [OneCallMinutelyWeather]
+  wind_deg: Int
+  wind_gust: Float
+  wind_speed: Float
+}
+
+type OneCallMinutely {
+  dt: Int
+  precipitation: Int
+}
+
+type OneCallMinutelyWeather {
+  description: String
+  icon: String
+  id: Int
+  main: String
+}
+
+type OneCallResponse {
+  data: OneCallData
+  error: CoeatherSimpleError
+  ok: Boolean!
+}
+
+type PopularResponse {
+  data: MoviePopularData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type Poster {
+  aspect_ratio: Float
+  file_path: String
+  height: Int
+  iso_639_1: String
+  vote_average: Float
+  vote_count: Int
+  width: Int
+}
+
+type Query {
+  CoeatherHello: String @join__field(graph: COEATHERS)
+  CovieHello: String @join__field(graph: COVIES)
+  TvPopulars(page: Int): TvPopularResponse! @join__field(graph: COVIES)
+  findCitiesByCityName(cityName: String!): CitiesReponse! @join__field(graph: COEATHERS)
+  findCountriesByName(cityName: String): FureCountriesResponse! @join__field(graph: COEATHERS)
+  getAirPollution(end: Int, latitude: Float!, longitude: Float!, start: Int): AirPollutionResponse! @join__field(graph: COEATHERS)
+  getCitiesByCountryCode(country: String!): CitiesReponse! @join__field(graph: COEATHERS)
+  getCountries: CountriesResponse! @join__field(graph: COEATHERS)
+  getCurrentWeather(cityId: String, cityName: String, lang: String, latitude: String, longitude: String, units: String, zipCode: String): CurrentWeatherResponse! @join__field(graph: COEATHERS)
+  getForecastWeather(exclude: String, lang: String, latitude: Float!, longitude: Float!, units: String): OneCallResponse! @join__field(graph: COEATHERS)
+  movieCredits(movieId: Int!): MovieCreditsResponse! @join__field(graph: COVIES)
+  movieDetail(movieId: Int!): MovieDetailResponse! @join__field(graph: COVIES)
+  movieImages(movieId: Int!): MovieImagesResponse! @join__field(graph: COVIES)
+  movieKeywords(movieId: Int!): MovieKeywordsResponse @join__field(graph: COVIES)
+  movieLatest: MovieLatestResponse! @join__field(graph: COVIES)
+  movieNowPlaying(language: String, page: Int, region: String): MovieNowPlayingResponse! @join__field(graph: COVIES)
+  moviePopulars(page: Int): PopularResponse! @join__field(graph: COVIES)
+  movieProviders: MovieProvidersResponse! @join__field(graph: COVIES)
+  movieReviews(movieId: Int!): MovieReviewsResponse! @join__field(graph: COVIES)
+  movieSimilars(movieId: Int!): MovieSimilarsResponse! @join__field(graph: COVIES)
+  movieTopRated(language: String, page: Int, region: String): MovieTopRatedResponse! @join__field(graph: COVIES)
+  movieUpcomings(language: String, page: Int, region: String): MovieUpcomingResponse! @join__field(graph: COVIES)
+  movieVideos(movieId: Int!): MovieVideosResponse! @join__field(graph: COVIES)
+  trendings(mediaType: String!, timeWindow: String!): TrendingsResponse! @join__field(graph: COVIES)
+  tvCredits(tvId: Int!): TvCreditsResponse! @join__field(graph: COVIES)
+  tvDetail(tvId: Int!): TvDetailResponse! @join__field(graph: COVIES)
+  tvImages(tvId: Int!): TvImagesResponse! @join__field(graph: COVIES)
+  tvKeywords(tvId: Int!): TvKeywordsResponse! @join__field(graph: COVIES)
+  tvLatest: TvLatestResponse! @join__field(graph: COVIES)
+  tvProviders: TvProvidersResponse! @join__field(graph: COVIES)
+  tvReviews(tvId: Int!): TvReviewsResponse! @join__field(graph: COVIES)
+  tvSimilars(tvId: Int!): TvSimilarsResponse! @join__field(graph: COVIES)
+  tvTopRated: TvTopRatedResponse! @join__field(graph: COVIES)
+  tvVideos(tvId: Int!): TvVideosResponse! @join__field(graph: COVIES)
+}
+
+type Trendings {
+  adult: Boolean
+  backdrop_path: String
+  genre_ids: [Int]
+  id: Int
+  original_language: String
+  original_title: String
+  overview: String
+  popularity: Float
+  poster_path: String
+  release_date: String
+  title: String
+  video: Boolean
+  vote_average: Float
+  vote_count: Int
+}
+
+type TrendingsData {
+  page: Int
+  results: [Trendings]
+  total_pages: Int
+  total_results: Int
+}
+
+type TrendingsResponse {
+  data: TrendingsData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type TvCreditsCast {
+  adult: Boolean
+  character: String
+  credit_id: String
+  gender: Int
+  id: Int
+  known_for_department: String
+  name: String
+  order: Int
+  original_name: String
+  popularity: Float
+}
+
+type TvCreditsCrew {
+  adult: Boolean
+  credit_id: String
+  department: String
+  gender: Int
+  id: Int
+  job: String
+  known_for_department: String
+  name: String
+  original_name: String
+  popularity: Float
+  profile_path: String
+}
+
+type TvCreditsData {
+  cast: [TvCreditsCast]
+  crew: [TvCreditsCrew]
+  id: Int
+}
+
+type TvCreditsResponse {
+  data: TvCreditsData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type TvDetailCreatedBy {
+  credit_id: String
+  gender: Int
+  id: Int
+  name: String
+  profile_path: String
+}
+
+type TvDetailData {
+  backdrop_path: String
+  created_by: [TvDetailCreatedBy]
+  episode_run_time: [Int]
+  first_air_date: String
+  genres: [TvDetailGenre]
+  homepage: String
+  id: Int
+  in_production: Boolean
+  languages: [String]
+  last_air_date: String
+  last_episode_to_air: TvDetailLastEpisodeToAir
+  name: String
+  networks: [TvDetailNetwork]
+  number_of_episodes: Int
+  number_of_seasons: Int
+  origin_country: [String]
+  original_language: String
+  original_name: String
+  overview: String
+  popularity: Float
+  poster_path: String
+  production_companies: [TvDetailProductionCompany]
+  production_countries: [TvDetailProductionCountry]
+  seasons: [TvDetailSeason]
+  spoken_languages: [TvDetailSpokenLanguage]
+  status: String
+  tagline: String
+  type: String
+  vote_average: Float
+  vote_count: Int
+}
+
+type TvDetailGenre {
+  id: Int
+  name: String
+}
+
+type TvDetailLastEpisodeToAir {
+  air_date: String
+  episode_number: Int
+  id: Int
+  name: String
+  overview: String
+  production_code: String
+  season_number: Int
+  still_path: String
+  vote_average: Float
+  vote_count: Int
+}
+
+type TvDetailNetwork {
+  id: Int
+  logo_path: String
+  name: String
+  origin_country: String
+}
+
+type TvDetailProductionCompany {
+  id: Int
+  logo_path: String
+  name: String
+  origin_country: String
+}
+
+type TvDetailProductionCountry {
+  iso_3166_1: String
+  name: String
+}
+
+type TvDetailResponse {
+  data: TvDetailData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type TvDetailSeason {
+  air_date: String
+  episode_count: Int
+  id: Int
+  name: String
+  overview: String
+  poster_path: String
+  season_number: Int
+}
+
+type TvDetailSpokenLanguage {
+  english_name: String
+  iso_639_1: String
+  name: String
+}
+
+type TvImageBackdrop {
+  aspect_ratio: Float
+  file_path: String
+  height: Int
+  iso_639_1: String
+  vote_average: Float
+  vote_count: Int
+  width: Int
+}
+
+type TvImagePoster {
+  aspect_ratio: Float
+  file_path: String
+  height: Int
+  iso_639_1: String
+  vote_average: Float
+  vote_count: Int
+  width: Int
+}
+
+type TvImagesData {
+  backdrops: [TvImageBackdrop]
+  id: Int
+  posters: [TvImagePoster]
+}
+
+type TvImagesResponse {
+  data: TvImagesData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type TvKeyword {
+  id: Int
+  name: String
+}
+
+type TvKeywordsData {
+  id: Int
+  results: [TvKeyword]
+}
+
+type TvKeywordsResponse {
+  data: TvKeywordsData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type TvLatestData {
+  backdrop_path: String
+  episode_run_time: [Int]
+  first_air_date: String
+  genres: [TvLatestGenre]
+  homepage: String
+  id: Int
+  in_production: Boolean
+  languages: [String]
+  last_air_date: String
+  name: String
+  networks: [TvLatestNetwork]
+  number_of_episodes: Int
+  number_of_seasons: Int
+  origin_country: [String]
+  original_language: String
+  original_name: String
+  overview: String
+  popularity: Int
+  poster_path: String
+  seasons: [TvLatestSeason]
+  status: String
+  type: String
+  vote_average: Float
+  vote_count: Int
+}
+
+type TvLatestGenre {
+  id: Int
+  name: String
+}
+
+type TvLatestNetwork {
+  id: Int
+  name: String
+}
+
+type TvLatestResponse {
+  data: TvLatestData
+  error: CovieSimpleError
+  ok: Boolean
+}
+
+type TvLatestSeason {
+  air_date: String
+  id: Int
+  poster_path: String
+  season_number: Int
+}
+
+type TvPopular {
+  backdrop_path: String
+  first_air_date: String
+  genre_ids: [Int]
+  id: Int
+  name: String
+  origin_country: [String]
+  original_language: String
+  original_name: String
+  overview: String
+  popularity: Float
+  poster_path: String
+  vote_average: Float
+  vote_count: Int
+}
+
+type TvPopularData {
+  page: Int
+  results: [TvPopular]
+  total_pages: Int
+  total_results: Int
+}
+
+type TvPopularResponse {
+  data: TvPopularData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type TvProvider {
+  display_priority: Int
+  logo_path: String
+  provider_id: Int
+  provider_name: String
+}
+
+type TvProvidersData {
+  results: [TvProvider]
+}
+
+type TvProvidersResponse {
+  data: TvProvidersData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type TvReview {
+  author: String
+  author_details: TvReviewAuthorDetail
+  content: String
+  created_at: String
+  id: String
+  updated_at: String
+  url: String
+}
+
+type TvReviewAuthorDetail {
+  avatar_path: String
+  name: String
+  rating: Int
+  username: String
+}
+
+type TvReviewsData {
+  id: Int
+  page: Int
+  results: [TvReview]
+  total_pages: Int
+  total_results: Int
+}
+
+type TvReviewsResponse {
+  data: TvReviewsData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type TvSimilar {
+  backdrop_path: String
+  first_air_date: String
+  genre_ids: [Int]
+  id: Int
+  name: String
+  origin_country: [String]
+  original_language: String
+  original_name: String
+  overview: String
+  popularity: Float
+  poster_path: String
+  vote_average: Float
+  vote_count: Int
+}
+
+type TvSimilarsData {
+  page: Int
+  results: [TvSimilar]
+  total_pages: Int
+  total_results: Int
+}
+
+type TvSimilarsResponse {
+  data: TvSimilarsData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type TvTopRated {
+  backdrop_path: String
+  first_air_date: String
+  genre_ids: [Int]
+  id: Int
+  name: String
+  origin_country: [String]
+  original_language: String
+  original_name: String
+  overview: String
+  popularity: Float
+  poster_path: String
+  vote_average: Float
+  vote_count: Int
+}
+
+type TvTopRatedData {
+  page: Int
+  results: [TvTopRated]
+  total_pages: Int
+  total_results: Int
+}
+
+type TvTopRatedResponse {
+  data: TvTopRatedData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type TvVideo {
+  id: String
+  iso_639_1: String
+  iso_3166_1: String
+  key: String
+  name: String
+  official: Boolean
+  published_at: String
+  site: String
+  size: Int
+  type: String
+}
+
+type TvVideosData {
+  id: Int
+  results: [TvVideo]
+}
+
+type TvVideosResponse {
+  data: TvVideosData
+  error: CovieSimpleError
+  ok: Boolean!
+}
+
+type WeatherClouds {
+  all: Int
+}
+
+type WeatherCoord {
+  lat: Float
+  lon: Float
+}
+
+type WeatherData {
+  description: String
+  icon: String
+  id: Int
+  main: String
+}
+
+type WeatherMain {
+  feels_like: Float
+  humidity: Int
+  pressure: Int
+  temp: Float
+  temp_max: Float
+  temp_min: Float
+}
+
+type WeatherSys {
+  country: String
+  id: Int
+  sunrise: Int
+  sunset: Int
+  type: Int
+}
+
+type WeatherWind {
+  deg: Int
+  speed: Float
+}
+
+enum core__Purpose {
+  """
+  `EXECUTION` features provide metadata necessary to for operation execution.
+  """
+  EXECUTION
+
+  """
+  `SECURITY` features provide metadata necessary to securely resolve fields.
+  """
+  SECURITY
+}
+
+scalar join__FieldSet
+
+enum join__Graph {
+  COEATHERS @join__graph(name: "coeathers" url: "http://localhost:3002/graphql")
+  COVIES @join__graph(name: "covies" url: "http://localhost:3001/graphql")
+}

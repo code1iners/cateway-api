@@ -3,26 +3,22 @@ require("dotenv").config();
 import http from "http";
 import express from "express";
 import { ApolloServer } from "apollo-server-express";
-import { ApolloGateway, IntrospectAndCompose } from "@apollo/gateway";
+import { ApolloGateway } from "@apollo/gateway";
 import logger from "morgan";
+import {
+  getSuperGraphSdlWithFile,
+  getSuperGraphSdlWithIntrospectAndCompose,
+} from "./utils/graphUtils";
 
 runServer();
 
 async function runServer() {
   try {
     const app = express();
+
     const httpServer = http.createServer(app);
 
-    const gateway = new ApolloGateway({
-      supergraphSdl: new IntrospectAndCompose({
-        subgraphs: [
-          {
-            name: "COVIES",
-            url: "http://localhost:3000/graphql",
-          },
-        ],
-      }),
-    });
+    const gateway = new ApolloGateway();
 
     const apolloServer = new ApolloServer({
       gateway,
@@ -42,8 +38,7 @@ async function runServer() {
     });
 
     // Start server.
-    const r = await httpServer.listen({ port: process.env.PORT });
-    console.log(r);
+    await httpServer.listen({ port: process.env.PORT });
 
     // Write start log.
     if (process.env.NODE_ENV === "production") {
