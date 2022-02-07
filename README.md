@@ -10,4 +10,4 @@ Simple apollo graphql gateway server for codeliner's applications.
 
 ## To do list.
 
-- [ ] Migrate the project as Typescript.
+- [x] Migrate the project as Typescript.
