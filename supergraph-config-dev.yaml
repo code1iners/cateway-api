@@ -1,0 +1,9 @@
+subgraphs:
+  covies:
+    routing_url: https://covies-development.herokuapp.com/graphql
+    schema:
+      subgraph_url: https://covies-development.herokuapp.com/graphql
+  coeathers:
+    routing_url: https://coeathers-development.herokuapp.com/graphql
+    schema:
+      subgraph_url: https://coeathers-development.herokuapp.com/graphql

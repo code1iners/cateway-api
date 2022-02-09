@@ -9,11 +9,12 @@ import {
   getSuperGraphSdlWithFile,
   getSuperGraphSdlWithIntrospectAndCompose,
 } from "./utils/graphUtils";
+import { initEnvironment } from "./utils/envUtils";
 
-runServer();
-
-async function runServer() {
+(async () => {
   try {
+    initEnvironment();
+
     const app = express();
 
     const httpServer = http.createServer(app);
@@ -38,17 +39,23 @@ async function runServer() {
     });
 
     // Start server.
-    await httpServer.listen({ port: process.env.PORT });
+    await httpServer.listen({ port: process.env.PORT || 4000 });
 
     // Write start log.
     if (process.env.NODE_ENV === "production") {
-      console.info("Server running.");
+      console.info(
+        `Server running at PORT ${process.env.PORT || 4000}${
+          apolloServer.graphqlPath
+        }`
+      );
     } else {
       console.info(
-        `Server running at http://localhost:${process.env.PORT}${apolloServer.graphqlPath}`
+        `Server running at http://localhost:${process.env.PORT || 4000}${
+          apolloServer.graphqlPath
+        }`
       );
     }
   } catch (e) {
     console.error("[runServer]", e);
   }
-}
+})();

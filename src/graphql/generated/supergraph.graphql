@@ -1163,6 +1163,6 @@ enum core__Purpose {
 scalar join__FieldSet
 
 enum join__Graph {
-  COEATHERS @join__graph(name: "coeathers" url: "http://localhost:3002/graphql")
-  COVIES @join__graph(name: "covies" url: "http://localhost:3001/graphql")
+  COEATHERS @join__graph(name: "coeathers" url: "https://coeathers-development.herokuapp.com/graphql")
+  COVIES @join__graph(name: "covies" url: "https://covies-development.herokuapp.com/graphql")
 }
