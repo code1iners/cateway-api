@@ -1,0 +1,50 @@
+type CoserSimpleError {
+  code: Int
+  message: String
+}
+
+type Query {
+  coserHello: String
+  findUserByUsername(username: String!): User
+  findUserById(id: Int!): User
+  me: User
+}
+
+type User @key(fields: "id") {
+  id: ID!
+  email: String!
+  username: String!
+  password: String
+  createdAt: String
+  updatedAt: String
+}
+
+type JoinResponse {
+  ok: Boolean!
+  data: User
+  error: CoserSimpleError
+}
+
+type Mutation {
+  join(email: String!, username: String!, password: String!): JoinResponse!
+  login(email: String!, password: String!): LoginResponse!
+  quit(id: Int!): QuitResponse!
+  updateUser(id: Int!, email: String, username: String, password: String): UpdateUserResponse!
+}
+
+type LoginResponse {
+  ok: Boolean!
+  token: String
+  error: CoserSimpleError
+}
+
+type QuitResponse {
+  ok: Boolean!
+  error: CoserSimpleError
+}
+
+type UpdateUserResponse {
+  ok: Boolean!
+  data: User
+  error: CoserSimpleError
+}
