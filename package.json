@@ -18,8 +18,8 @@
     "subgraph:list:development": "rover subgraph list cateway-development-f6hth@current",
     "subgraph:list:production": "rover subgraph list cateway-production@current",
     "build": "tsc",
-    "start:origin": "node build/server",
-    "start": "npx pm2 start ./build/server.js",
+    "start:node": "NODE_ENV=development node ./build/server.js",
+    "start": "npx pm2 start ./build/server.js --env development",
     "stop": "npx pm2 kill"
   },
   "author": "Codeliner <codeliners96@gmail.com>",
