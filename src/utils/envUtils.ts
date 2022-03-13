@@ -1,4 +1,4 @@
-import { DEVELOPMENT, PRODUCTION } from "./constants";
+import { DEVELOPMENT, PRODUCTION, LOCAL } from "./constants";
 
 /**
  * ### Initialize environment configuration file path.
@@ -18,6 +18,6 @@ export function getCurrentEnvironment() {
     case PRODUCTION:
       return `${__dirname}/../../.env.${PRODUCTION}`;
     default:
-      return `${__dirname}/../../.env.${DEVELOPMENT}`;
+      return `${__dirname}/../../.env.${LOCAL}`;
   }
 }
