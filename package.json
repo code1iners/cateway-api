@@ -18,7 +18,8 @@
     "subgraph:list:development": "rover subgraph list cateway-development-f6hth@current",
     "subgraph:list:production": "rover subgraph list cateway-production@current",
     "build": "tsc",
-    "start": "node build/server"
+    "start:origin": "node build/server",
+    "start": "npx pm2 start ./build/server.js"
   },
   "author": "Codeliner <codeliners96@gmail.com>",
   "license": "MIT",
