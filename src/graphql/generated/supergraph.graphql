@@ -649,8 +649,8 @@ type Poster {
 
 type Query {
   CoeatherHello: String @join__field(graph: COEATHERS)
-  CovieHello: String @join__field(graph: COVIES)
   TvPopulars(page: Int): TvPopularResponse! @join__field(graph: COVIES)
+  covieHello: String @join__field(graph: COVIES)
   findCitiesByCityName(cityName: String!): CitiesReponse! @join__field(graph: COEATHERS)
   findCountriesByName(cityName: String): FureCountriesResponse! @join__field(graph: COEATHERS)
   getAirPollution(end: Int, latitude: Float!, longitude: Float!, start: Int): AirPollutionResponse! @join__field(graph: COEATHERS)

@@ -1,24 +1,33 @@
-type CovieSimpleError {
-  code: Int
-  message: String
+type ConfigurationLanguagesData {
+  iso_639_1: String
+  english_name: String
+  name: String
+}
+
+type ConfigurationLanguagesResponse {
+  ok: Boolean!
+  error: CovieSimpleError
+  data: [ConfigurationLanguagesData]
 }
 
 type Query {
-  CovieHello: String
+  configurationLanguages: ConfigurationLanguagesResponse!
+  covieHello: String
   trendings(mediaType: String!, timeWindow: String!): TrendingsResponse!
-  movieCredits(movieId: Int!): MovieCreditsResponse!
-  movieDetail(movieId: Int!): MovieDetailResponse!
-  movieImages(movieId: Int!): MovieImagesResponse!
+  movieCredits(movieId: Int!, language: String): MovieCreditsResponse!
+  movieDetail(movieId: Int!, language: String, appendToResponse: String): MovieDetailResponse!
+  movieImages(movieId: Int!, language: String, includeImageLanguage: String): MovieImagesResponse!
   movieKeywords(movieId: Int!): MovieKeywordsResponse
-  movieLatest: MovieLatestResponse!
+  movieLatest(language: String): MovieLatestResponse!
   movieNowPlaying(page: Int, language: String, region: String): MovieNowPlayingResponse!
-  moviePopulars(page: Int): PopularResponse!
+  moviePopulars(page: Int, language: String, region: String): PopularResponse!
   movieProviders: MovieProvidersResponse!
-  movieReviews(movieId: Int!): MovieReviewsResponse!
-  movieSimilars(movieId: Int!): MovieSimilarsResponse!
+  movieRecommendations(movieId: Int!, page: Int, language: String): RecommendationResponse!
+  movieReviews(movieId: Int!, language: String): MovieReviewsResponse!
+  movieSimilars(movieId: Int!, language: String): MovieSimilarsResponse!
   movieTopRated(page: Int, language: String, region: String): MovieTopRatedResponse!
   movieUpcomings(page: Int, language: String, region: String): MovieUpcomingResponse!
-  movieVideos(movieId: Int!): MovieVideosResponse!
+  movieVideos(movieId: Int!, language: String): MovieVideosResponse!
   tvCredits(tvId: Int!): TvCreditsResponse!
   tvDetail(tvId: Int!): TvDetailResponse!
   tvImages(tvId: Int!): TvImagesResponse!
@@ -30,6 +39,11 @@ type Query {
   tvSimilars(tvId: Int!): TvSimilarsResponse!
   tvTopRated: TvTopRatedResponse!
   tvVideos(tvId: Int!): TvVideosResponse!
+}
+
+type CovieSimpleError {
+  code: Int
+  message: String
 }
 
 type Trendings {
@@ -62,18 +76,39 @@ type TrendingsResponse {
   data: TrendingsData
 }
 
-type Cast {
+type MovieCast {
   id: Int
   adult: Boolean
   gender: Int
   known_for_department: String
   name: String
   original_name: String
+  popularity: Int
+  profile_path: String
+  cast_id: Int
+  character: String
+  credit_id: String
+  order: Int
+}
+
+type MovieCrew {
+  adult: Boolean
+  gender: Int
+  id: Int
+  known_for_department: String
+  name: String
+  original_name: String
+  popularity: Int
+  profile_path: String
+  credit_id: String
+  department: String
+  job: String
 }
 
 type MovieCredits {
   id: Int
-  cast: [Cast]
+  cast: [MovieCast]
+  crew: [MovieCrew]
 }
 
 type MovieCreditsResponse {
@@ -222,7 +257,7 @@ type MovieLatestData {
   backdrop_path: String
   budges: Int
   genres: [MovieLatestGenre]
-  hompage: String
+  homepage: String
   id: Int
   imdb_id: String
   original_language: String
@@ -324,6 +359,36 @@ type MovieProvidersResponse {
   data: MovieProvidersData
 }
 
+type RecommendationResult {
+  poster_path: String
+  adult: Boolean
+  overview: String
+  release_date: String
+  genre_ids: [Int]
+  id: Int
+  original_title: String
+  original_language: String
+  title: String
+  backdrop_path: String
+  popularity: Float
+  vote_count: Int
+  video: Boolean
+  vote_average: Float
+}
+
+type RecommendationData {
+  page: Int
+  results: [RecommendationResult]
+  total_pages: Int
+  total_results: Int
+}
+
+type RecommendationResponse {
+  ok: Boolean!
+  data: RecommendationData
+  error: CovieSimpleError
+}
+
 type MovieAuthorDetail {
   name: String
   username: String
@@ -366,10 +431,10 @@ type MovieSimilar {
   original_language: String
   title: String
   backdrop_path: String
-  popularity: Int
+  popularity: Float
   vote_count: Int
   video: Boolean
-  vote_average: Int
+  vote_average: Float
 }
 
 type MovieSimilarsData {
